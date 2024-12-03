@@ -27,8 +27,10 @@
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; } = null!;
 
-        public int LevelId { get; set; }
-        public virtual Level Level { get; set; } = null!;
+        public Guid TeacherId { get; set; }
+        public virtual Teacher Teacher { get; set; } = null!;
+
+        public Level Level { get; set; }
 
         [Required]
         [MaxLength(LanguageMaxLength)]
