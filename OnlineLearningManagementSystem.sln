@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningSystem.Web", "LearningSystem.Web\LearningSystem.Web.csproj", "{F0DDDF54-4B36-46F5-A049-EC921A7BB7A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearningSystem.Web", "LearningSystem.Web\LearningSystem.Web.csproj", "{F0DDDF54-4B36-46F5-A049-EC921A7BB7A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{672DE3A9-6885-4114-9254-7B7178880DA6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{E1F4D154-C06F-481D-A442-5FFC3F5613EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningSystem.Data", "LearningSystem.Data\LearningSystem.Data.csproj", "{4C5417D7-81FC-4A1B-8082-296362DF5B21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearningSystem.Data", "LearningSystem.Data\LearningSystem.Data.csproj", "{4C5417D7-81FC-4A1B-8082-296362DF5B21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningSystem.Data.Models", "LearningSystem.Data.Models\LearningSystem.Data.Models.csproj", "{C684B08D-4359-4018-95F1-8983949E8DAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearningSystem.Data.Models", "LearningSystem.Data.Models\LearningSystem.Data.Models.csproj", "{C684B08D-4359-4018-95F1-8983949E8DAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningSystem.Common", "LearningSystem.Common\LearningSystem.Common.csproj", "{3FD2A7D3-A1DA-44E3-9198-3160842F9622}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearningSystem.Common", "LearningSystem.Common\LearningSystem.Common.csproj", "{3FD2A7D3-A1DA-44E3-9198-3160842F9622}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearningSystem.Web.ViewModels", "LearningSystem.ViewModels\LearningSystem.Web.ViewModels.csproj", "{BF2081FC-6583-4065-B350-B8B21F11DF59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{3FD2A7D3-A1DA-44E3-9198-3160842F9622}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FD2A7D3-A1DA-44E3-9198-3160842F9622}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FD2A7D3-A1DA-44E3-9198-3160842F9622}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF2081FC-6583-4065-B350-B8B21F11DF59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF2081FC-6583-4065-B350-B8B21F11DF59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF2081FC-6583-4065-B350-B8B21F11DF59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF2081FC-6583-4065-B350-B8B21F11DF59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{F0DDDF54-4B36-46F5-A049-EC921A7BB7A4} = {672DE3A9-6885-4114-9254-7B7178880DA6}
 		{4C5417D7-81FC-4A1B-8082-296362DF5B21} = {E1F4D154-C06F-481D-A442-5FFC3F5613EB}
 		{C684B08D-4359-4018-95F1-8983949E8DAD} = {E1F4D154-C06F-481D-A442-5FFC3F5613EB}
+		{BF2081FC-6583-4065-B350-B8B21F11DF59} = {672DE3A9-6885-4114-9254-7B7178880DA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {50363450-DFBF-4E66-A80F-96793D567895}

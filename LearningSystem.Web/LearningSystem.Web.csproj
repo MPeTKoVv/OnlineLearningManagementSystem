@@ -24,10 +24,7 @@
     <ProjectReference Include="..\LearningSystem.Common\LearningSystem.Common.csproj" />
     <ProjectReference Include="..\LearningSystem.Data.Models\LearningSystem.Data.Models.csproj" />
     <ProjectReference Include="..\LearningSystem.Data\LearningSystem.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Identity\Data\" />
+    <ProjectReference Include="..\LearningSystem.ViewModels\LearningSystem.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

@@ -28,11 +28,7 @@
             builder.ApplyConfiguration(new CourseEntityConfiguration());
             builder.ApplyConfiguration(new EnrollmentEntityConfiguration());
             builder.ApplyConfiguration(new LessonEntityConfiguration());
-
-            //if (this.seedDb)
-            //{
-            //    builder.ApplyConfiguration(new SeedCategoryEntityConfiguration());
-            //}
+            builder.ApplyConfiguration(new CategoryEntityConfiguration());
 
             base.OnModelCreating(builder);
         }

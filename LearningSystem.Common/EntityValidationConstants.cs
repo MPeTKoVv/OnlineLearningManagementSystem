@@ -14,6 +14,9 @@
 
             public const int IconUrlMinLength = 10;
             public const int IconUrlMaxLength = 256;
+
+            public const int PasswordMinLength = 6;
+            public const int PasswordMaxLength = 100;
         }
 
         public class Course

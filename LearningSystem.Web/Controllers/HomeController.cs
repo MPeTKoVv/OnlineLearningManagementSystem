@@ -1,4 +1,4 @@
-using LearningSystem.Web.Models;
+using LearningSystem.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
