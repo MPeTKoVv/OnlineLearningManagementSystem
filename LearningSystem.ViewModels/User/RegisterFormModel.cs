@@ -32,5 +32,7 @@
         [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; } = null!;
+
+        public int Gender { get; set; }
     }
 }

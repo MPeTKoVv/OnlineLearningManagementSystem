@@ -28,14 +28,6 @@
         [MaxLength(PhoneNumberMaxLength)]
         public string Bio { get; set; } = null!;
 
-        [Required]
-        [MaxLength(ProfilePictureUrlMaxLength)]
-        public string ProfilePictureUrl { get; set; } = null!;
-
-        [Required]
-        [MaxLength(IconUrlMaxLength)]
-        public string IconUrl { get; set; } = null!;
-
         public ICollection<Course> Courses { get; set; }
     }
 }

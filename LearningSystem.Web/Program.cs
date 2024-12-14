@@ -19,6 +19,9 @@ namespace LearningSystem.Web
             builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
             })
                 .AddEntityFrameworkStores<LearningSystemDbContext>();
             builder.Services.AddControllersWithViews();

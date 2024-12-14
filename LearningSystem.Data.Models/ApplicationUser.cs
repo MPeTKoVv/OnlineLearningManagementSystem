@@ -11,6 +11,7 @@
         public ApplicationUser()
         {
             Id = Guid.NewGuid();
+            Occupation = Occupation.Student;
 
             Enrollments = new HashSet<Enrollment>();
         }
@@ -23,11 +24,12 @@
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;
 
-        public bool Sex { get; set; }
+        [MaxLength(ProfilePictureUrlMaxLength)]
+        public string? ProfilePictureUrl { get; set; }
 
-        [Required]
-        [MaxLength(IconUrlMaxLength)]
-        public string IconUrl { get; set; } = null!;
+        public Gender Gender { get; set; }
+
+        public Occupation Occupation { get; set; }
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }
     }

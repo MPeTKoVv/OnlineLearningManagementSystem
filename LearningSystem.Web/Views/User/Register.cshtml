@@ -1,4 +1,5 @@
 ﻿@using LearningSystem.Web.ViewModels.User
+@using static LearningSystem.Common.GeneralApplicationConstants;
 @model RegisterFormModel
 @{
     ViewData["Title"] = "Register";
@@ -38,6 +39,23 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
 
+            <!-- Image Selection with Scroll to Bottom -->
+            <div class="mb-3 text-center">
+                <h5>Select gender</h5>
+                <div class="d-flex justify-content-center">
+                    <!-- First Image -->
+                    <label class="me-2">
+                        <input type="radio" name="SelectedImage" value="male" class="d-none" asp-for="Gender">
+                        <img src=@MaleStudentImageUrl alt="Image 1" class="img-thumbnail rounded-circle scroll-to-end" style="width: 100px; height: 100px;">
+                    </label>
+                    <!-- Second Image -->
+                    <label class="ms-2">
+                        <input type="radio" name="SelectedImage" value="female" class="d-none" asp-for="Gender">
+                        <img src=@FemaleStudentImageUrl alt="Image 2" class="img-thumbnail rounded-circle scroll-to-end" style="width: 100px; height: 100px;">
+                    </label>
+                </div>
+            </div>
+
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </div>
@@ -45,4 +63,44 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // Add active border highlight for selected image
+        document.querySelectorAll('input[name="SelectedImage"]').forEach(input => {
+            input.addEventListener('change', function () {
+                document.querySelectorAll('.selected-image').forEach(img => {
+                    img.classList.remove('selected-image'); // Remove highlight from all images
+                });
+                // Add highlight to selected image
+                this.nextElementSibling.classList.add('selected-image');
+            });
+        });
+    </script>
+    <script>
+        // Scroll to the bottom of the page when an image is clicked
+        document.querySelectorAll('.scroll-to-end').forEach(image => {
+            image.addEventListener('click', function () {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth' // Smooth scroll to the bottom
+                });
+            });
+        });
+    </script>
+    <style>
+        .selected-image {
+            border: 3px solid #007bff; /* Highlight color */
+        }
+
+
+
+        .img-thumbnail {
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+            .img-thumbnail:hover {
+                transform: scale(1.05); /* Slight zoom on hover */
+            }
+    </style>
 }

@@ -1,22 +1,20 @@
 ﻿namespace LearningSystem.Common
 {
-    using System.ComponentModel.DataAnnotations;
-
     public static class EntityValidationConstants
     {
         public class ApplicationUser
         {
+            public const int PasswordMinLength = 6;
+            public const int PasswordMaxLength = 100;
+
             public const int FirstNameMinLength = 1;
             public const int FirstNameMaxLength = 20;
 
             public const int LastNameMinLength = 1;
             public const int LastNameMaxLength = 20;
 
-            public const int IconUrlMinLength = 10;
-            public const int IconUrlMaxLength = 256;
-
-            public const int PasswordMinLength = 6;
-            public const int PasswordMaxLength = 100;
+            public const int ProfilePictureUrlMinLength = 10;
+            public const int ProfilePictureUrlMaxLength = 256;
         }
 
         public class Course
@@ -50,12 +48,6 @@
 
             public const int PhoneNumberMinLength = 7;
             public const int PhoneNumberMaxLength = 15;
-
-            public const int ProfilePictureUrlMinLength = 10;
-            public const int ProfilePictureUrlMaxLength = 256;
-
-            public const int IconUrlMinLength = 10;
-            public const int IconUrlMaxLength = 256;
         }
 
         public class Category
