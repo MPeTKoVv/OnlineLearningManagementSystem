@@ -4,6 +4,8 @@ namespace LearningSystem.Web
 
     using LearningSystem.Data;
     using LearningSystem.Data.Models;
+    using LearningSystem.Services.Data.Interfaces;
+    using LearningSystem.Web.Infrastructure.Extensions;
 
     public class Program
     {
@@ -25,6 +27,8 @@ namespace LearningSystem.Web
             })
                 .AddEntityFrameworkStores<LearningSystemDbContext>();
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddApplicationServices(typeof(ICourseService));
 
             WebApplication app = builder.Build();
 
