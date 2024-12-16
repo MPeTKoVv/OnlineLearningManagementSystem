@@ -43,8 +43,8 @@
 
         public class Teacher
         {
-            public const int BioMinLength = 10;
-            public const int BioMaxLength = 200;
+            public const int BioMinLength = 5;
+            public const int BioMaxLength = 500;
 
             public const int PhoneNumberMinLength = 7;
             public const int PhoneNumberMaxLength = 15;

@@ -25,7 +25,7 @@
         public virtual ApplicationUser User { get; set; } = null!;
 
         [Required]
-        [MaxLength(PhoneNumberMaxLength)]
+        [MaxLength(BioMaxLength)]
         public string Bio { get; set; } = null!;
 
         public ICollection<Course> Courses { get; set; }

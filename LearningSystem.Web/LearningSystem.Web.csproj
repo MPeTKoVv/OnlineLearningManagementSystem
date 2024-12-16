@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Shared\_NotificationsPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.11" />
@@ -27,6 +31,10 @@
     <ProjectReference Include="..\LearningSystem.Services.Data\LearningSystem.Services.Data.csproj" />
     <ProjectReference Include="..\LearningSystem.ViewModels\LearningSystem.Web.ViewModels.csproj" />
     <ProjectReference Include="..\LearningSystem.Web.Infrastructure\LearningSystem.Web.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Shared\_NotificationsPartial.cshtml" />
   </ItemGroup>
 
 </Project>
