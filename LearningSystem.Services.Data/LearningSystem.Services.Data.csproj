@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LearningSystem.Data\LearningSystem.Data.csproj" />
+    <ProjectReference Include="..\LearningSystem.ViewModels\LearningSystem.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

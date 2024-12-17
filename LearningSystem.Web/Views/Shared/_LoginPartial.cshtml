@@ -10,7 +10,7 @@
 
 @{
     bool isUserTeacher = await this.teacherService.TeacherExistByUserId(this.User.GetId()!);
-    string fullName = await this.applicationUserService.GetUserFullName(this.User.GetId()!);
+    string fullName = await this.applicationUserService.GetUserFullNameByEmail(User.Identity?.Name!);
 }
 
 <ul class="navbar-nav">

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Shared\_NotificationsPartial.cshtml" />
+    <None Include="wwwroot\js\notifications.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,10 +31,6 @@
     <ProjectReference Include="..\LearningSystem.Services.Data\LearningSystem.Services.Data.csproj" />
     <ProjectReference Include="..\LearningSystem.ViewModels\LearningSystem.Web.ViewModels.csproj" />
     <ProjectReference Include="..\LearningSystem.Web.Infrastructure\LearningSystem.Web.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Shared\_NotificationsPartial.cshtml" />
   </ItemGroup>
 
 </Project>

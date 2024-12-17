@@ -16,15 +16,18 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<string> GetUserFullName(string userId)
+        public async Task<string> GetUserFullNameByEmail(string email)
         {
             var user = await dbContext
                 .Users
-                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+                .FirstOrDefaultAsync(u => u.Email == email);
 
-            string fullName = user.FirstName + " " + user.LastName;
+            if (user == null)
+            {
+                return string.Empty;
+            }
 
-            return fullName;
+            return $"{user.FirstName} {user.LastName}";
         }
     }
 }

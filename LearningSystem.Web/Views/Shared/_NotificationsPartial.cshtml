@@ -1,29 +1,11 @@
-﻿<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <text>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: '@TempData["SuccessMessage"]',
-                    timer: 5000,
-                    showConfirmButton: false
-                });
-        </text>
-    }
+﻿@using static LearningSystem.Common.NotificationMessagesConstants
 
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <text>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: '@TempData["ErrorMessage"]',
-                    timer: 5000,
-                    showConfirmButton: false
-                });
-        </text>
-    }
-                });
-</script>
+@if (TempData.ContainsKey(ErrorMessage))
+{
+    <script>window.TempDataErrorMessage = ('@TempData[ErrorMessage]');</script>
+}
+
+@if (TempData.ContainsKey(SuccessMessage))
+{
+    <script>window.TempDataSuccessMessage = ('@TempData[SuccessMessage]');</script>
+}

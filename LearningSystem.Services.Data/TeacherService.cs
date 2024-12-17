@@ -4,6 +4,8 @@
 
     using LearningSystem.Data;
     using LearningSystem.Services.Data.Interfaces;
+    using LearningSystem.Web.ViewModels.Teacher;
+    using LearningSystem.Data.Models;
 
     public class TeacherService : ITeacherService
     {
@@ -22,5 +24,28 @@
 
             return teacherExist;
         }
+
+        public async Task<bool> TeacherExistByPhoneNumber(string phoneNumber)
+        {
+            bool teacherExist = await this.dbContext
+                .Teachers
+                .AnyAsync(t => t.PhoneNumber == phoneNumber);
+
+            return teacherExist;
+        }
+
+        public async Task Create(string userId, BecomeTeacherFormModel formModel)
+        {
+            var teacher = new Teacher()
+            {
+                UserId = Guid.Parse(userId),
+                PhoneNumber = formModel.PhoneNumber,
+                Bio = formModel.Bio,
+            };
+
+            await dbContext.Teachers.AddAsync(teacher);
+            await dbContext.SaveChangesAsync();
+        }
+
     }
 }

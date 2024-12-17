@@ -7,11 +7,12 @@
 <h1 class="text-center">@ViewData["Title"]</h1>
 
 <div class="row">
+
     <div class="col-md-6 offset-md-3">
-        <form asp-action="SubmitTeacherRequest" method="post">
-            <h2 class="text-center">Apply to Become a Teacher</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <h2 class="text-center">Apply to Become a Teacher</h2>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <form method="post">
             <!-- Phone Number -->
             <div class="form-floating mb-3">
                 <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number" />
@@ -20,18 +21,19 @@
             </div>
             <!-- Short Biography -->
             <div class="form-floating mb-3">
-                <textarea asp-for="Biography" class="form-control" placeholder="Write a short bio about yourself" style="height: 150px;"></textarea>
-                <label asp-for="Biography">Biography</label>
-                <span asp-validation-for="Biography" class="text-danger"></span>
+                <textarea asp-for="Bio" class="form-control" placeholder="Write a short bio about yourself" style="height: 150px;"></textarea>
+                <label asp-for="Bio">Biography</label>
+                <span asp-validation-for="Bio" class="text-danger"></span>
             </div>
-                
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary w-100">Submit Application</button>
+            <div class="text-center">
+                <input class="btn btn-primary mt-3 " type="submit" value="Submit Application" />
+            </div>
         </form>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    @* <partial name="_NotificationScriptPartial" /> *@
+    <partial name="_NotificationsPartial" />
 }
