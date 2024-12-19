@@ -20,6 +20,12 @@
                 .WithMany(t => t.Courses)
                 .HasForeignKey(c => c.TeacherId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasMany(c => c.Ratings)
+                .WithOne(r => r.Course)
+                .HasForeignKey(c => c.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

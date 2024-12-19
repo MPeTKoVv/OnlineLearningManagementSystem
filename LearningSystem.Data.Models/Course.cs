@@ -10,13 +10,14 @@
         {
             Lessons = new HashSet<Lesson>();
             Enrollments = new HashSet<Enrollment>();
+            Ratings = new HashSet<Rating>();
         }
 
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
-        [MaxLength(DescriptionMaxLength)]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; } = null!;
 
         [Required]
@@ -30,11 +31,11 @@
         public Guid TeacherId { get; set; }
         public virtual Teacher Teacher { get; set; } = null!;
 
-        public Level Level { get; set; }
-
         [Required]
         [MaxLength(LanguageMaxLength)]
         public string Language { get; set; } = null!;
+
+        public Level Level { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
@@ -48,6 +49,7 @@
 
         public virtual ICollection<Lesson> Lessons { get; set; } = null!;
         public virtual ICollection<Enrollment> Enrollments { get; set; } = null!;
+        public virtual ICollection<Rating> Ratings { get; set; } = null!;
 
     }
 }

@@ -23,6 +23,8 @@
 
         public DbSet<Teacher> Teachers { get; set; } = null!;
 
+        public DbSet<Rating> Ratings { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new CourseEntityConfiguration());

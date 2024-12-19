@@ -7,7 +7,7 @@
     public class Lesson
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [StringLength(TitleMaxLength)]
@@ -21,8 +21,7 @@
         [MaxLength(TitleMaxLength)]
         public string Content { get; set; } = null!;
 
-
-        public int CourseId { get; set; }
+        public Guid CourseId { get; set; }
         public virtual Course Course { get; set; } = null!;
 
         public int Order { get; set; }

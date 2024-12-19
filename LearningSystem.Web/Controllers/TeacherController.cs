@@ -69,5 +69,11 @@
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AddCourse()
+        {
+            return View();
+        }
     }
 }
