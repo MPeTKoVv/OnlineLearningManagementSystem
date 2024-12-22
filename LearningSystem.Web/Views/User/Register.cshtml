@@ -43,15 +43,15 @@
             <div class="mb-3 text-center">
                 <h5>Select gender</h5>
                 <div class="d-flex justify-content-center">
-                    <!-- First Image -->
+                    <!-- Male -->
                     <label class="me-2">
-                        <input type="radio" name="SelectedImage" value="male" class="d-none" asp-for="Gender">
-                        <img src=@MaleStudentImageUrl alt="Image 1" class="img-thumbnail rounded-circle scroll-to-end" style="width: 100px; height: 100px;">
+                        <input type="radio" asp-for="Gender" name="Gender" value="0" class="d-none">
+                        <img src=@MaleStudentImageUrl alt="Male" class="img-thumbnail rounded-circle scroll-to-end" style="width: 100px; height: 100px;">
                     </label>
-                    <!-- Second Image -->
+                    <!-- Female -->
                     <label class="ms-2">
-                        <input type="radio" name="SelectedImage" value="female" class="d-none" asp-for="Gender">
-                        <img src=@FemaleStudentImageUrl alt="Image 2" class="img-thumbnail rounded-circle scroll-to-end" style="width: 100px; height: 100px;">
+                        <input type="radio" asp-for="Gender" name="Gender" value="Female" class="d-none" />
+                        <img src=@FemaleStudentImageUrl alt="Female" class="img-thumbnail rounded-circle scroll-to-end" style="width: 100px; height: 100px;">
                     </label>
                 </div>
             </div>
@@ -61,21 +61,35 @@
     </div>
 </div>
 
+
+
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
     <script>
-        // Add active border highlight for selected image
-        document.querySelectorAll('input[name="SelectedImage"]').forEach(input => {
-            input.addEventListener('change', function () {
-                document.querySelectorAll('.selected-image').forEach(img => {
-                    img.classList.remove('selected-image'); // Remove highlight from all images
+        document.addEventListener("DOMContentLoaded", function () {
+            // Select all radio buttons and images
+            const radioButtons = document.querySelectorAll('input[name="Gender"]');
+            const images = document.querySelectorAll('img');
+
+            // Function to remove highlight from all images
+            const clearHighlights = () => {
+                images.forEach(img => img.classList.remove('highlight'));
+            };
+
+            // Add event listeners to each radio button
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    clearHighlights(); // Remove previous highlights
+                    const selectedImage = this.nextElementSibling; // Get the sibling img element
+                    selectedImage.classList.add('highlight'); // Add highlight to the selected image
                 });
-                // Add highlight to selected image
-                this.nextElementSibling.classList.add('selected-image');
             });
         });
+
     </script>
+
     <script>
         // Scroll to the bottom of the page when an image is clicked
         document.querySelectorAll('.scroll-to-end').forEach(image => {
@@ -88,7 +102,7 @@
         });
     </script>
     <style>
-        .selected-image {
+        .highlight {
             border: 3px solid #007bff; /* Highlight color */
         }
 

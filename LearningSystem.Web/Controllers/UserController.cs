@@ -7,6 +7,7 @@
 
     using LearningSystem.Data.Models;
     using LearningSystem.Web.ViewModels.User;
+    using static Common.NotificationMessagesConstants;
 
     public class UserController : Controller
     {
@@ -41,7 +42,8 @@
             ApplicationUser user = new ApplicationUser()
             {
                 FirstName = model.FirstName,
-                LastName = model.LastName
+                LastName = model.LastName,
+                Gender = model.Gender
             };
 
             await userManager.SetEmailAsync(user, model.Email);
@@ -91,6 +93,9 @@
 
             if (!result.Succeeded)
             {
+                TempData[ErrorMessage] =
+                    "There was an error while logging you in! Please try again later or contact an administrator.";
+
                 return View(model);
             }
 

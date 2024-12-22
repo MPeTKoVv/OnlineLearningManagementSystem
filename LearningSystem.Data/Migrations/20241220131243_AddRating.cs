@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LearningSystem.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRatingsTable : Migration
+    public partial class AddRating : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,35 +15,10 @@ namespace LearningSystem.Data.Migrations
                 name: "FK_Enrollments_AspNetUsers_UserId",
                 table: "Enrollments");
 
-            migrationBuilder.AlterColumn<Guid>(
-                name: "CourseId",
-                table: "Lessons",
-                type: "uniqueidentifier",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int");
-
-            migrationBuilder.AlterColumn<Guid>(
-                name: "Id",
-                table: "Lessons",
-                type: "uniqueidentifier",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int")
-                .OldAnnotation("SqlServer:Identity", "1, 1");
-
-            migrationBuilder.AlterColumn<Guid>(
-                name: "CourseId",
-                table: "Enrollments",
-                type: "uniqueidentifier",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int");
-
-            migrationBuilder.AddColumn<Guid>(
+            migrationBuilder.AddColumn<int>(
                 name: "RatingId",
                 table: "Enrollments",
-                type: "uniqueidentifier",
+                type: "int",
                 nullable: true);
 
             migrationBuilder.AlterColumn<string>(
@@ -56,22 +31,14 @@ namespace LearningSystem.Data.Migrations
                 oldType: "nvarchar(500)",
                 oldMaxLength: 500);
 
-            migrationBuilder.AlterColumn<Guid>(
-                name: "Id",
-                table: "Courses",
-                type: "uniqueidentifier",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int")
-                .OldAnnotation("SqlServer:Identity", "1, 1");
-
             migrationBuilder.CreateTable(
                 name: "Ratings",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Stars = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
                     EnrollmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -126,31 +93,6 @@ namespace LearningSystem.Data.Migrations
                 name: "RatingId",
                 table: "Enrollments");
 
-            migrationBuilder.AlterColumn<int>(
-                name: "CourseId",
-                table: "Lessons",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "Id",
-                table: "Lessons",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier")
-                .Annotation("SqlServer:Identity", "1, 1");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "CourseId",
-                table: "Enrollments",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier");
-
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
                 table: "Courses",
@@ -160,15 +102,6 @@ namespace LearningSystem.Data.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(50)",
                 oldMaxLength: 50);
-
-            migrationBuilder.AlterColumn<int>(
-                name: "Id",
-                table: "Courses",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier")
-                .Annotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Enrollments_AspNetUsers_UserId",

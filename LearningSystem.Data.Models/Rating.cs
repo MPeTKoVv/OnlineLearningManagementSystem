@@ -4,11 +4,11 @@
     public class Rating
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public int Stars { get; set; }
 
-        public Guid CourseId { get; set; }
+        public int CourseId { get; set; }
         public virtual Course Course { get; set; } = null!;
 
         public Guid EnrollmentId { get; set; }

@@ -27,6 +27,9 @@
 
             public const int LanguageMinLength = 2;
             public const int LanguageMaxLength = 15;
+
+            public const string PriceMinValue = "0";
+            public const string PriceMaxValue = "10000";
         }
 
         public class Lesson

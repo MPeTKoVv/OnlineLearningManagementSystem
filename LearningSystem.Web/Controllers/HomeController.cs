@@ -1,9 +1,11 @@
-using LearningSystem.Web.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
 namespace LearningSystem.Web.Controllers
 {
+    using System.Diagnostics;
+    
+    using Microsoft.AspNetCore.Mvc;
+    
+    using LearningSystem.Web.ViewModels;
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

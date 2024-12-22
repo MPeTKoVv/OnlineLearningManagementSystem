@@ -14,7 +14,7 @@
         }
 
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(NameMaxLength)]
@@ -23,6 +23,7 @@
         [Required]
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
+
         public double DurationInHours { get; set; }
 
         public int CategoryId { get; set; }

@@ -30,6 +30,11 @@ namespace LearningSystem.Web
 
             builder.Services.AddApplicationServices(typeof(ICourseService));
 
+            builder.Services.ConfigureApplicationCookie(cfg =>
+            {
+                cfg.LoginPath = "/User/Login";
+            });
+
             WebApplication app = builder.Build();
 
             if (app.Environment.IsDevelopment())

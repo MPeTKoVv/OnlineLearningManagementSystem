@@ -47,5 +47,15 @@
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<string> GetTeacherIdByUserId(string userId)
+        {
+            var teacher = await this.dbContext
+                .Teachers
+                .FirstAsync(t => t.UserId.ToString() == userId);
+
+            string teacherId = teacher.Id.ToString();
+
+            return teacherId;
+        }
     }
 }

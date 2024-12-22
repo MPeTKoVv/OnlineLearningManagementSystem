@@ -1,5 +1,6 @@
 ﻿namespace LearningSystem.Web.ViewModels.User
 {
+    using LearningSystem.Data.Models;
     using System.ComponentModel.DataAnnotations;
 
     using static Common.EntityValidationConstants.ApplicationUser;
@@ -33,6 +34,7 @@
         [Display(Name = "Last Name")]
         public string LastName { get; set; } = null!;
 
-        public int Gender { get; set; }
+        [Required]
+        public Gender Gender { get; set; }
     }
 }

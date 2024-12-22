@@ -9,5 +9,7 @@
         Task<bool> TeacherExistByPhoneNumber(string phoneNumber);
 
         Task Create(string userId, BecomeTeacherFormModel formModel);
+
+        Task<string> GetTeacherIdByUserId(string userId);
     }
 }

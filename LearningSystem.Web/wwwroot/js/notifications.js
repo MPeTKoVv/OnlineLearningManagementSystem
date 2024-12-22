@@ -16,7 +16,7 @@
             icon: 'error',
             title: 'Error',
             text: window.TempDataErrorMessage,
-            timer: 2000,
+            timer: 5000,
             showConfirmButton: false
         });
     }

@@ -33,4 +33,9 @@
     <ProjectReference Include="..\LearningSystem.Web.Infrastructure\LearningSystem.Web.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Identity\" />
+    <Folder Include="Areas\Identity\Pages\Account\" />
+  </ItemGroup>
+
 </Project>

@@ -16,14 +16,14 @@
         public Guid UserId { get; set; }
         public virtual ApplicationUser User { get; set; } = null!;
 
-        public Guid CourseId { get; set; }
+        public int CourseId { get; set; }
         public virtual Course Course { get; set; } = null!;
 
         public DateTime EnrolledAt { get; set; } = DateTime.Now;
 
         public bool PaymentCompleted { get; set; }
 
-        public Guid? RatingId { get; set; }
+        public int? RatingId { get; set; }
         public virtual Rating? Rating { get; set; }
     }
 }

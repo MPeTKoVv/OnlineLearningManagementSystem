@@ -1,12 +1,14 @@
 ﻿namespace LearningSystem.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
-    using static Common.NotificationMessagesConstants;
     using LearningSystem.Web.ViewModels.Teacher;
     using LearningSystem.Web.Infrastructure.Extensions;
     using LearningSystem.Services.Data.Interfaces;
+    using static Common.NotificationMessagesConstants;
 
+    [Authorize]
     public class TeacherController : Controller
     {
         private readonly ITeacherService teacherService;
@@ -68,12 +70,6 @@
             TempData[SuccessMessage] = "You successfully become a Teacher!";
 
             return RedirectToAction("Index", "Home");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> AddCourse()
-        {
-            return View();
         }
     }
 }
