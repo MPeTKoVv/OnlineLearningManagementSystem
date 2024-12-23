@@ -4,6 +4,9 @@
     {
         public const int ReleaseYear = 2024;
 
+        public const int DefaultPage = 1;
+        public const int EntitiesPerPage = 3;
+
         public const string MaleStudentImageUrl = "https://www.reshot.com/preview-assets/icons/9DUTMHP8BQ/student-male-9DUTMHP8BQ.svg";
         public const string FemaleStudentImageUrl = "https://www.reshot.com/preview-assets/icons/7XMW9THSRD/student-female-7XMW9THSRD.svg";
 

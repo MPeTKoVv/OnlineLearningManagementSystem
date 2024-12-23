@@ -1,7 +1,69 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using LearningSystem.Web.ViewModels.Course
+@using LearningSystem.Services.Data.Interfaces
+@inject ICourseService courseService
+@model ICollection<CourseFormModel>
+
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+<div class="container my-5">
+    <!-- Hero Section -->
+    <div class="jumbotron text-center py-5 bg-primary text-white rounded">
+        <h1 class="display-4">Welcome to Learning System</h1>
+        <p class="lead">Empower your skills with the best courses and expert teachers.</p>
+        <a class="btn btn-light btn-lg me-2" asp-controller="Course" asp-action="All">Explore Courses</a>
+        <a class="btn btn-secondary btn-lg" asp-controller="User" asp-action="Register">Get Started</a>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row text-center my-5">
+        <div class="col-md-4">
+            <i class="bi bi-book-half text-primary fs-1"></i>
+            <h3>Learn Anywhere</h3>
+            <p>Access our courses from any device, anytime, anywhere.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="bi bi-person-check text-primary fs-1"></i>
+            <h3>Top Instructors</h3>
+            <p>Learn from industry experts and certified teachers.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="bi bi-star-fill text-primary fs-1"></i>
+            <h3>Highly Rated</h3>
+            <p>Our courses are rated highly by students worldwide.</p>
+        </div>
+    </div>
+
+    <!-- Dynamic Courses Section -->
+    <div class="my-5">
+        <h2 class="text-center mb-4">Available Courses</h2>
+        <div class="row">
+            @* @foreach (var course in Model.Courses)
+            {
+            <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+            <img src="@course.ImageUrl" class="card-img-top" alt="@course.Name" style="height: 200px; object-fit: cover;">
+            <div class="card-body">
+            <h5 class="card-title">@course.Name</h5>
+            <p class="card-text text-truncate">@course.Description</p>
+            <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-primary w-100">View Details</a>
+            </div>
+            </div>
+            </div>
+            } *@
+        </div>
+    </div>
+
+    <!-- Call-to-Action for Teachers -->
+    <div class="text-center bg-light py-5 rounded shadow-sm">
+        <h2>Are you an expert in your field?</h2>
+        <p class="lead">Join us as a teacher and share your knowledge with learners worldwide.</p>
+        <a class="btn btn-success btn-lg" asp-controller="Teachers" asp-action="Register">Become a Teacher</a>
+    </div>
 </div>
+
+@section Scripts {
+    <partial name="_NotificationsPartial" />
+}

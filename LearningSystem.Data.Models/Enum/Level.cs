@@ -1,4 +1,4 @@
-﻿namespace LearningSystem.Data.Models
+﻿namespace LearningSystem.Data.Models.Enums
 {
     public enum Level
     {

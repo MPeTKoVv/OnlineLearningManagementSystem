@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using LearningSystem.Common;
-    using LearningSystem.Data.Models;
+    using LearningSystem.Data.Models.Enums;
     using LearningSystem.Web.ViewModels.Category;
     using static LearningSystem.Common.EntityValidationConstants.Course;
 

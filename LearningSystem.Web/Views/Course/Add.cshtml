@@ -1,4 +1,4 @@
-﻿@using LearningSystem.Web.ViewModels.Course
+﻿@using LearningSystem.Data.Models.Enums
 @model CourseFormModel
 @{
     ViewData["Title"] = "Add Course";
@@ -39,7 +39,7 @@
             <div class="form-group mb-3">
                 <label asp-for="Level">Level</label>
                 <select asp-for="Level" class="form-control">
-                    @foreach (var level in Enum.GetValues(typeof(LearningSystem.Data.Models.Level)))
+                    @foreach (var level in Enum.GetValues(typeof(Level)))
                     {
                         <option value="@level">@level</option>
                     }

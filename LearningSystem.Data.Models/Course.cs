@@ -1,7 +1,7 @@
 ﻿namespace LearningSystem.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
-
+    using LearningSystem.Data.Models.Enums;
     using static Common.EntityValidationConstants.Course;
 
     public class Course

@@ -7,5 +7,7 @@
         Task<IEnumerable<CourseSelectCategoryFormModel>> AllCategoriesAsync();
 
         Task<bool> ExistsByIdAsync(int id);
+
+        Task<IEnumerable<string>> AllCategoryNamesAsync();
     }
 }

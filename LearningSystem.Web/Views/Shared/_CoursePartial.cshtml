@@ -1,0 +1,22 @@
+﻿@model LearningSystem.Web.ViewModels.Course.CourseViewModel
+
+<div class="card shadow-sm mb-4" style="width: 18rem;">
+    <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Name" style="height: 200px; object-fit: cover;">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">
+            <strong>Category:</strong> @Model.CategoryName <br />
+            <strong>Level:</strong> @Model.Level <br />
+            <strong>Price:</strong> @Model.Price.ToString("C") <br />
+            @if (Model.OffersCertificate)
+            {
+                <span class="badge bg-success">Certificate Included</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">No Certificate</span>
+            }
+        </p>
+        <a href="/Courses/Details/@Model.Id" class="btn btn-primary btn-sm w-100">View Details</a>
+    </div>
+</div>

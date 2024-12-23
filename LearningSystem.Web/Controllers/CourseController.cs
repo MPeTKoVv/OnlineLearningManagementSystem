@@ -1,10 +1,13 @@
 ﻿namespace LearningSystem.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
     using LearningSystem.Web.ViewModels.Course;
     using LearningSystem.Web.Infrastructure.Extensions;
+    using LearningSystem.Services.Data.Models;
     using LearningSystem.Services.Data.Interfaces;
+
     using static Common.NotificationMessagesConstants;
 
     public class CourseController : Controller
@@ -18,6 +21,20 @@
             this.courseService = courseService;
             this.teacherService = teacherService;
             this.categoryService = categoryService;
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> All([FromQuery]AllCoursesQueryModel queryModel)
+        {
+            AllCoursesFilteredAndPagedServiceModel serviceModel =
+                await courseService.AllAsync(queryModel);
+
+            queryModel.Courses = serviceModel.Courses;
+            queryModel.TotalCourses = serviceModel.TotalCourses;
+            queryModel.Categories = await categoryService.AllCategoryNamesAsync();
+
+            return View(queryModel);
         }
 
         [HttpGet]
