@@ -8,5 +8,9 @@
         Task<int> CreateAndReturnIdAsync(CourseFormModel formModel, string teacherId);
 
         Task<AllCoursesFilteredAndPagedServiceModel> AllAsync(AllCoursesQueryModel queryModel);
+
+        Task<IEnumerable<CourseViewModel>> GetByTeacherIdAsync(string teacherId);
+
+        Task<IEnumerable<CourseViewModel>> TakeLastFour();
     }
 }

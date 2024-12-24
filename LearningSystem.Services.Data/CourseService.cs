@@ -117,5 +117,45 @@
 
             return course.Id;
         }
+
+        public async Task<IEnumerable<CourseViewModel>> GetByTeacherIdAsync(string teacherId)
+        {
+            var courses = await dbContext
+                .Courses
+                .Where(c => c.TeacherId.ToString() == teacherId)
+                .Select(c => new CourseViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    ImageUrl = c.Category.IconUrl,
+                    CategoryName = c.Category.Name,
+                    Price = c.Price,
+                    Level = c.Level.ToString(),
+                    OffersCertificate = c.OffersCertificate,
+                })
+                .ToArrayAsync();
+
+            return courses;
+        }
+
+        public async Task<IEnumerable<CourseViewModel>> TakeLastFour()
+        {
+            var courses = await dbContext
+                .Courses
+                .Take(4)
+                .Select(c => new CourseViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    ImageUrl = c.Category.IconUrl,
+                    CategoryName = c.Category.Name,
+                    Price = c.Price,
+                    Level = c.Level.ToString(),
+                    OffersCertificate = c.OffersCertificate,
+                })
+                .ToArrayAsync();
+
+            return courses;
+        }
     }
 }

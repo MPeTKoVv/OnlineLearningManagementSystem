@@ -5,19 +5,23 @@ namespace LearningSystem.Web.Controllers
     using Microsoft.AspNetCore.Mvc;
     
     using LearningSystem.Web.ViewModels;
+    using LearningSystem.Services.Data.Interfaces;
 
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ICourseService courseService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ICourseService courseService)
         {
             _logger = logger;
+            this.courseService = courseService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var courses = await courseService.TakeLastFour();
+            return View(courses);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

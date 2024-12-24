@@ -25,7 +25,7 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All([FromQuery]AllCoursesQueryModel queryModel)
+        public async Task<IActionResult> All([FromQuery] AllCoursesQueryModel queryModel)
         {
             AllCoursesFilteredAndPagedServiceModel serviceModel =
                 await courseService.AllAsync(queryModel);
@@ -104,6 +104,21 @@
 
                 return View(formModel);
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TeacherCourses()
+        {
+            var teacherExists = await teacherService.TeacherExistByUserId(this.User.GetId()!);
+            if (!teacherExists)
+            {
+                return RedirectToAction("Become","Teacher");
+            }
+
+            string teacherId = await teacherService.GetTeacherIdByUserId(this.User.GetId()!);
+            var courses = await courseService.GetByTeacherIdAsync(teacherId);
+
+            return View(courses);
         }
     }
 }
