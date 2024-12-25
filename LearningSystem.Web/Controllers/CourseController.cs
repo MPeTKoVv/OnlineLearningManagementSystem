@@ -10,6 +10,7 @@
 
     using static Common.NotificationMessagesConstants;
 
+    [Authorize]
     public class CourseController : Controller
     {
         private readonly ICourseService courseService;

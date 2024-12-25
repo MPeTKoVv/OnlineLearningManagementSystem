@@ -8,21 +8,28 @@
     using LearningSystem.Data.Models;
     using LearningSystem.Web.ViewModels.User;
     using static Common.NotificationMessagesConstants;
+    using LearningSystem.Services.Data.Interfaces;
+    using LearningSystem.Web.Infrastructure.Extensions;
 
     public class UserController : Controller
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IMemoryCache memoryCache;
+        
+        private readonly IApplicationUserService applicationUserService;
 
         public UserController(SignInManager<ApplicationUser> signInManager,
                               UserManager<ApplicationUser> userManager,
-                              IMemoryCache memoryCache)
+                              IMemoryCache memoryCache,
+                              IApplicationUserService applicationUserService)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
 
             this.memoryCache = memoryCache;
+
+            this.applicationUserService = applicationUserService;
         }
 
         [HttpGet]
@@ -100,6 +107,14 @@
             }
 
             return Redirect(model.ReturnUrl ?? "/Home/Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EnrolledCourses()
+        {
+            var courses = await this.applicationUserService.GetEnrolledCoursesByUserId(this.User.GetId()!);
+
+            return View(courses);
         }
 
     }

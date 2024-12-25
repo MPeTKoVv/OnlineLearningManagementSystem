@@ -1,0 +1,22 @@
+﻿@model IEnumerable<CourseViewModel>
+@{
+    ViewData["Title"] = "Enrolled Courses";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            You are not currently enrolled in any courses. Explore our <a asp-controller="Course" asp-action="All">course catalog</a> to find your next learning opportunity!
+        </div>
+    }
+    else
+    {
+        @foreach (var course in Model)
+        {
+            <partial name="_CoursePartial" model="@course" />
+        }
+    }
+</div>
