@@ -17,6 +17,7 @@
                 <span class="badge bg-secondary">No Certificate</span>
             }
         </p>
-        <a href="/Courses/Details/@Model.Id" class="btn btn-primary btn-sm w-100">View Details</a>
+        <a asp-area="" asp-controller="Course" asp-action="Details" asp-route-id="@Model.Id"
+           class="btn btn-success">Details</a>
     </div>
 </div>

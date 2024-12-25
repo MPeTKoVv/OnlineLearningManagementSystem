@@ -6,7 +6,7 @@
 <div>
     <h1>@ViewData["Title"]</h1>
     <hr />
-    <div class="row">
+    <div class="row justify-content-between">
         @foreach (var course in Model)
         {
             <partial name="_CoursePartial" model="@course" />

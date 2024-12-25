@@ -1,0 +1,46 @@
+﻿@model LearningSystem.Web.ViewModels.Course.CourseViewModel
+
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">@Model.Name</h1>
+    <hr />
+
+    <div class="row">
+        <!-- Course Image -->
+        <div class="col-md-6">
+            <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded shadow" style="max-width: 300px; height: auto;" />
+        </div>
+
+        <!-- Course Information -->
+        <div class="col-md-6">
+            <h3>Course Information</h3>
+            <p><strong>Category:</strong> @Model.CategoryName</p>
+            <p><strong>Level:</strong> @Model.Level</p>
+            <p><strong>Price:</strong> $@Model.Price</p>
+            <p><strong>Certificate Offered:</strong> @(Model.OffersCertificate ? "Yes" : "No")</p>
+
+            <!-- Action Buttons -->
+            <div class="mt-4">
+                <a class="btn btn-primary btn-lg me-3" asp-controller="Course" asp-action="Enroll" asp-route-id="@Model.Id">Enroll Now</a>
+                <a class="btn btn-secondary btn-lg" asp-controller="Course" asp-action="All">Back to Courses</a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <!-- Description Section -->
+    <div class="row">
+        <div class="col-12">
+            <h3>Course Description</h3>
+            <p>@Model.Description</p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_NotificationsPartial" />
+}

@@ -112,13 +112,28 @@
             var teacherExists = await teacherService.TeacherExistByUserId(this.User.GetId()!);
             if (!teacherExists)
             {
-                return RedirectToAction("Become","Teacher");
+                return RedirectToAction("Become", "Teacher");
             }
 
             string teacherId = await teacherService.GetTeacherIdByUserId(this.User.GetId()!);
             var courses = await courseService.GetByTeacherIdAsync(teacherId);
 
             return View(courses);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var courseExists = await this.courseService.ExistsByIdAsync(id);
+            if (!courseExists)
+            {
+                TempData[ErrorMessage] = "The given course does not exists!";
+
+                return RedirectToAction("All", "Course");
+            }
+
+            var course = await this.courseService.GetByIdAsync(id);
+            return View(course);
         }
     }
 }

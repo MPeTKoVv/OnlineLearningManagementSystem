@@ -118,6 +118,34 @@
             return course.Id;
         }
 
+        public async Task<bool> ExistsByIdAsync(int id)
+        {
+            var exists = await dbContext
+                .Courses
+                .AnyAsync(c => c.Id == id);
+
+            return exists;
+        }
+
+        public async Task<CourseViewModel> GetByIdAsync(int id)
+        {
+            var course = await dbContext
+                .Courses
+                .Include(c => c.Category)
+                .FirstAsync(c => c.Id == id);
+
+            return new CourseViewModel
+            {
+                Name = course.Name,
+                Description = course.Description,
+                ImageUrl = course.Category.IconUrl,
+                CategoryName = course.Category.Name,
+                Price = course.Price,
+                Level = course.Level.ToString(),
+                OffersCertificate = course.OffersCertificate,
+            };
+        }
+
         public async Task<IEnumerable<CourseViewModel>> GetByTeacherIdAsync(string teacherId)
         {
             var courses = await dbContext
