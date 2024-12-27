@@ -6,8 +6,6 @@
 
         public string Name { get; set; } = null!;
 
-        public string Description { get; set; }
-
         public string ImageUrl { get; set; } = null!;
         
         public string CategoryName { get; set; } = null!;
@@ -15,6 +13,8 @@
         public decimal Price { get; set; }
 
         public string Level { get; set; } = null!;
+
+        public DateTime StartDate { get; set; }
 
         public bool OffersCertificate { get; set; }
     }

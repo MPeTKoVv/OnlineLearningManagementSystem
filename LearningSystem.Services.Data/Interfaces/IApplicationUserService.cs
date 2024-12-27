@@ -7,5 +7,9 @@ namespace LearningSystem.Services.Data.Interfaces
         Task<string> GetUserFullNameByEmail(string userId);
 
         Task<IEnumerable<CourseViewModel>> GetEnrolledCoursesByUserId(string id);
+
+        Task AddEnrollmentAsync(string userId, string enrollmentId);
+
+        Task<bool> CourseIsEnrolledByIdAsync(string userId, int courseId);
     }
 }

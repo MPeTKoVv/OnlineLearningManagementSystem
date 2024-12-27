@@ -52,9 +52,14 @@
                 <span asp-validation-for="Language" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="ReleaseDate" class="form-control" value="" />
-                <label asp-for="ReleaseDate">Release Date</label>
-                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                <input asp-for="StartDate" class="form-control" value="" />
+                <label asp-for="StartDate">Start Date</label>
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="EndDate" class="form-control" value="" />
+                <label asp-for="EndDate">End Date</label>
+                <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Price" class="form-control" placeholder="Price" />

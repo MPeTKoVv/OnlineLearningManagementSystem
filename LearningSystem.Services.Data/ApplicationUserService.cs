@@ -52,5 +52,33 @@
 
             return courses;
         }
+
+        public async Task AddEnrollmentAsync(string userId, string enrollmentId)
+        {
+            var enrollment = await dbContext
+                .Enrollments
+                .FirstAsync(e => e.Id.ToString() == enrollmentId);
+
+            var user = await dbContext
+                .Users
+                .FirstAsync(u => u.Id.ToString() == userId);
+
+            user.Enrollments.Add(enrollment);
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> CourseIsEnrolledByIdAsync(string userId, int courseId)
+        {
+            var var = await dbContext
+                .Users
+                .FirstAsync(u => u.Id.ToString() == userId);
+
+            var isEnrolled = await dbContext
+                .Enrollments
+                .AnyAsync(e => e.CourseId == courseId);
+
+            return isEnrolled;
+        }
     }
 }

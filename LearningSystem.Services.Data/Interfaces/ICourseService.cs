@@ -13,8 +13,10 @@
 
         Task<IEnumerable<CourseViewModel>> TakeLastFour();
 
-        Task<CourseViewModel> GetByIdAsync(int id);
+        Task<CourseViewModel> GetDetailsByIdAsync(int id);
 
         Task<bool> ExistsByIdAsync(int id);
+
+        Task<IEnumerable<CourseViewModel>>GetEnrolledCoursesByUserIdAsync(string userId);
     }
 }

@@ -6,11 +6,11 @@
 
     using LearningSystem.Data;
     using LearningSystem.Data.Models;
-    using LearningSystem.Web.ViewModels.Course;
+    using LearningSystem.Data.Models.Enums;
     using LearningSystem.Services.Data.Interfaces;
     using LearningSystem.Services.Data.Models;
+    using LearningSystem.Web.ViewModels.Course;
     using LearningSystem.Web.ViewModels.Course.Enum;
-    using LearningSystem.Data.Models.Enums;
 
     public class CourseService : ICourseService
     {
@@ -59,9 +59,9 @@
             coursesQuery = queryModel.CourseSorting switch
             {
                 CourseSorting.Newest => coursesQuery
-                    .OrderByDescending(h => h.CreatedAt),
+                    .OrderByDescending(h => h.CreatedOn),
                 CourseSorting.Oldest => coursesQuery
-                    .OrderBy(h => h.CreatedAt),
+                    .OrderBy(h => h.CreatedOn),
                 CourseSorting.PriceAscending => coursesQuery
                     .OrderBy(h => h.Price),
                 CourseSorting.PriceDescending => coursesQuery
@@ -69,7 +69,7 @@
                 CourseSorting.HighestRated => coursesQuery
                 .OrderByDescending(h => h.Rating),
                 _ => coursesQuery
-                    .OrderByDescending(h => h.CreatedAt)
+                    .OrderByDescending(h => h.CreatedOn)
             };
 
             IEnumerable<CourseViewModel> allCourses = await coursesQuery
@@ -107,7 +107,7 @@
                 TeacherId = Guid.Parse(teacherId),
                 Language = formModel.Language,
                 Level = formModel.Level,
-                ReleaseDate = formModel.ReleaseDate,
+                StartDate = formModel.StartDate,
                 Price = formModel.Price,
                 OffersCertificate = formModel.OffersCertificate,
             };
@@ -116,6 +116,27 @@
             await dbContext.SaveChangesAsync();
 
             return course.Id;
+        }
+
+        public async Task<string> EnrollCourseAndReturnEntrollmentIdAsync(int id, string userId)
+        {
+            var course = await dbContext
+                .Courses
+                .FirstAsync(c => c.Id == id);
+
+            var entrollment = new Enrollment()
+            {
+                UserId = Guid.Parse(userId),
+                CourseId = id
+            };
+
+            course.Enrollments.Add(entrollment);
+
+            await dbContext.Enrollments.AddAsync(entrollment);
+            await dbContext.SaveChangesAsync();
+
+            return entrollment.Id.ToString();
+
         }
 
         public async Task<bool> ExistsByIdAsync(int id)
@@ -127,15 +148,16 @@
             return exists;
         }
 
-        public async Task<CourseViewModel> GetByIdAsync(int id)
+        public async Task<CourseViewModel> GetDetailsByIdAsync(int id)
         {
             var course = await dbContext
                 .Courses
                 .Include(c => c.Category)
                 .FirstAsync(c => c.Id == id);
 
-            return new CourseViewModel
+            return new CourseDetailsViewModel
             {
+                Id = course.Id,
                 Name = course.Name,
                 Description = course.Description,
                 ImageUrl = course.Category.IconUrl,
@@ -182,6 +204,32 @@
                     OffersCertificate = c.OffersCertificate,
                 })
                 .ToArrayAsync();
+
+            return courses;
+        }
+
+        public async Task<IEnumerable<CourseViewModel>> GetEnrolledCoursesByUserIdAsync(string userId)
+        {
+            var user = await dbContext
+                .Users
+                .Include(u => u.Enrollments)
+                .ThenInclude(e => e.Course)
+                .ThenInclude(c=>c.Category)
+                .FirstAsync(u => u.Id.ToString() == userId);
+
+            var courses = user
+                .Enrollments
+                .Select(e => new CourseViewModel
+                {
+                    Id = e.Course.Id,
+                    Name = e.Course.Name,
+                    ImageUrl = e.Course.Category.IconUrl,
+                    CategoryName = e.Course.Category.Name,
+                    Price = e.Course.Price,
+                    Level = e.Course.Level.ToString(),
+                    OffersCertificate = e.Course.OffersCertificate,
+                })
+                .ToArray();
 
             return courses;
         }

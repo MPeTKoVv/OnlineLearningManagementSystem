@@ -38,9 +38,11 @@
 
         public Level Level { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
 
-        public DateTime ReleaseDate { get; set; }
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
 
         public decimal Price { get; set; }
 

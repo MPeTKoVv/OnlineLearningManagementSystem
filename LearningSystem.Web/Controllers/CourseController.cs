@@ -9,6 +9,7 @@
     using LearningSystem.Services.Data.Interfaces;
 
     using static Common.NotificationMessagesConstants;
+    using LearningSystem.Services.Data;
 
     [Authorize]
     public class CourseController : Controller
@@ -16,12 +17,20 @@
         private readonly ICourseService courseService;
         private readonly ITeacherService teacherService;
         private readonly ICategoryService categoryService;
+        private readonly IEnrollmentService enrollmentService;
+        private readonly IApplicationUserService applicationUserService;
 
-        public CourseController(ICourseService courseService, ITeacherService teacherService, ICategoryService categoryService)
+        public CourseController(ICourseService courseService,
+                                ITeacherService teacherService,
+                                ICategoryService categoryService,
+                                IEnrollmentService enrollmentService,
+                                IApplicationUserService applicationUserService)
         {
             this.courseService = courseService;
             this.teacherService = teacherService;
             this.categoryService = categoryService;
+            this.enrollmentService = enrollmentService;
+            this.applicationUserService = applicationUserService;
         }
 
         [HttpGet]
@@ -76,12 +85,6 @@
                 this.ModelState.AddModelError(nameof(formModel.CategoryId), "Selected category does not exist!");
             }
 
-            var releaseDate = formModel.ReleaseDate;
-            if (releaseDate < DateTime.Now)
-            {
-                this.ModelState.AddModelError(nameof(formModel.ReleaseDate), "Selected date does not exist!");
-            }
-
             if (!ModelState.IsValid)
             {
                 formModel.Categories = await categoryService.AllCategoriesAsync();
@@ -101,7 +104,7 @@
             catch (Exception)
             {
                 this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add course! Please try again later or contact administrator!");
-                formModel.Categories = await this.categoryService.AllCategoriesAsync();
+                formModel.Categories = await categoryService.AllCategoriesAsync();
 
                 return View(formModel);
             }
@@ -125,7 +128,7 @@
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var courseExists = await this.courseService.ExistsByIdAsync(id);
+            var courseExists = await courseService.ExistsByIdAsync(id);
             if (!courseExists)
             {
                 TempData[ErrorMessage] = "The given course does not exists!";
@@ -133,8 +136,55 @@
                 return RedirectToAction("All", "Course");
             }
 
-            var course = await this.courseService.GetByIdAsync(id);
+            var course = await courseService.GetDetailsByIdAsync(id);
             return View(course);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Enroll(int courseId)
+        {
+            var courseExists = await courseService.ExistsByIdAsync(courseId);
+            if (!courseExists)
+            {
+                TempData[ErrorMessage] = "The given course does not exist!";
+                return RedirectToAction("All");
+            }
+
+            string userId = this.User.GetId()!;
+            var isEnrolledByTheUser = await applicationUserService.CourseIsEnrolledByIdAsync(userId, courseId);
+            if (!isEnrolledByTheUser)
+            {
+                TempData[ErrorMessage] = "The given course is already enrolled!";
+                return RedirectToAction("EnrolledCourses");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Ok();
+            }
+
+            try
+            {
+                string enrollmentId = await enrollmentService.CreateEnrollmentAndReturnIdAsync(userId, courseId);
+
+                TempData[SuccessMessage] = "Course enrolled successfully!";
+                return RedirectToAction("EnrolledCourses");
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add course! Please try again later or contact administrator!");
+
+                return Ok();
+            }
+        }
+
+        public async Task<IActionResult> EnrolledCourses()
+        {
+            string userId = this.User.GetId()!;
+
+            var courses = await courseService.GetEnrolledCoursesByUserIdAsync(userId);
+
+            return View(courses);
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿namespace LearningSystem.Web.ViewModels.Course
 {
     using System.ComponentModel.DataAnnotations;
-    using LearningSystem.Common;
+
     using LearningSystem.Data.Models.Enums;
     using LearningSystem.Web.ViewModels.Category;
+    using LearningSystem.Web.ViewModels.Course.Validators;
+
     using static LearningSystem.Common.EntityValidationConstants.Course;
 
     public class CourseFormModel
@@ -33,9 +35,17 @@
         [StringLength(LanguageMaxLength, MinimumLength = LanguageMinLength)]
         public string Language { get; set; } = null!;
 
-        [Display(Name = "Release Date")]
+        [Display(Name = "Start Date")]
+        [Required(ErrorMessage = "The Start Date is required.")]
+        [DataType(DataType.DateTime, ErrorMessage = "The date format is invalid. Please use the format mm-dd-yyyy --:-- --.")]
+        [CustomValidation(typeof(DateValidator), nameof(DateValidator.ValidateStartDate))]
+        public DateTime StartDate { get; set; }
 
-        public DateTime ReleaseDate { get; set; }
+        [Display(Name = "End Date")]
+        [Required(ErrorMessage = "The End Date is required.")]
+        [DataType(DataType.Date, ErrorMessage = "The date format is invalid. Please use the format mm-dd-yyyy.")]
+        [CustomValidation(typeof(DateValidator), nameof(DateValidator.ValidateEndDate))]
+        public DateTime EndDate { get; set; }
 
         [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
         public decimal Price { get; set; }
