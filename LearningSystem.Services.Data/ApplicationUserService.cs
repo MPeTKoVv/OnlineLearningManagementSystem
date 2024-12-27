@@ -70,13 +70,14 @@
 
         public async Task<bool> CourseIsEnrolledByIdAsync(string userId, int courseId)
         {
-            var var = await dbContext
+            var user = await dbContext
                 .Users
+                .Include(u=>u.Enrollments)
                 .FirstAsync(u => u.Id.ToString() == userId);
 
-            var isEnrolled = await dbContext
+            var isEnrolled = user
                 .Enrollments
-                .AnyAsync(e => e.CourseId == courseId);
+                .Any(e => e.CourseId == courseId);
 
             return isEnrolled;
         }

@@ -3,13 +3,14 @@
     using LearningSystem.Data;
     using LearningSystem.Data.Models;
     using LearningSystem.Services.Data.Interfaces;
+    using Microsoft.EntityFrameworkCore;
 
     public class EnrollmentService : IEnrollmentService
     {
         private readonly LearningSystemDbContext dbContext;
 
         public EnrollmentService(LearningSystemDbContext dbContext)
-        {        
+        {
             this.dbContext = dbContext;
         }
 
@@ -21,7 +22,7 @@
                 CourseId = courseId,
                 PaymentCompleted = true
             };
-            
+
             await dbContext.Enrollments.AddAsync(enrollment);
             await dbContext.SaveChangesAsync();
 

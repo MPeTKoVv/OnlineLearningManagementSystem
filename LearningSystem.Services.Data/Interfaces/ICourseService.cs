@@ -18,5 +18,7 @@
         Task<bool> ExistsByIdAsync(int id);
 
         Task<IEnumerable<CourseViewModel>>GetEnrolledCoursesByUserIdAsync(string userId);
+
+        Task AddEnrollmentAsync(int courseId, string enrollmentId);
     }
 }

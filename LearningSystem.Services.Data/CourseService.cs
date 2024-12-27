@@ -217,6 +217,7 @@
                 .ThenInclude(c=>c.Category)
                 .FirstAsync(u => u.Id.ToString() == userId);
 
+
             var courses = user
                 .Enrollments
                 .Select(e => new CourseViewModel
@@ -232,6 +233,21 @@
                 .ToArray();
 
             return courses;
+        }
+
+        public async Task AddEnrollmentAsync(int courseId, string enrollmentId)
+        {
+            var enrollment = await dbContext
+                .Enrollments
+                .FirstAsync(e => e.Id.ToString() == enrollmentId);
+
+            var course = await dbContext
+                .Courses
+                .FirstAsync(c => c.Id == courseId);
+
+            course.Enrollments.Add(enrollment);
+
+            await dbContext.SaveChangesAsync();
         }
     }
 }

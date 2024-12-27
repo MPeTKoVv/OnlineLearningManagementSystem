@@ -152,20 +152,17 @@
 
             string userId = this.User.GetId()!;
             var isEnrolledByTheUser = await applicationUserService.CourseIsEnrolledByIdAsync(userId, courseId);
-            if (!isEnrolledByTheUser)
+            if (isEnrolledByTheUser)
             {
                 TempData[ErrorMessage] = "The given course is already enrolled!";
                 return RedirectToAction("EnrolledCourses");
             }
 
-            if (!ModelState.IsValid)
-            {
-                return Ok();
-            }
-
             try
             {
                 string enrollmentId = await enrollmentService.CreateEnrollmentAndReturnIdAsync(userId, courseId);
+                await applicationUserService.AddEnrollmentAsync(userId, enrollmentId);
+                await courseService.AddEnrollmentAsync(courseId, enrollmentId);
 
                 TempData[SuccessMessage] = "Course enrolled successfully!";
                 return RedirectToAction("EnrolledCourses");
@@ -174,7 +171,7 @@
             {
                 this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add course! Please try again later or contact administrator!");
 
-                return Ok();
+                return RedirectToAction("Index", "Home");
             }
         }
 

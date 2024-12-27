@@ -7,8 +7,8 @@
 <hr />
 
 <form method="get">
-    <div class="row d-flex justify-content-between">
-        <div class="form-group d-flex justify-content-between">
+    <div class="row d-flex justify-content-center">
+        <div class="form-group d-flex justify-content-center">
             <div class="form-group">
                 <label asp-for="Category"></label>
                 <select asp-for="Category" class="form-control">
@@ -19,7 +19,7 @@
                     }
                 </select>
             </div>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-center">
 
                 <div class="form-group col-md-3">
                     <div class="form-group">
@@ -108,7 +108,7 @@
     <h2 class="text-center">No courses found by the given criteria!</h2>
 }
 
-<div class="row d-flex justify-content-between">
+<div class="row d-flex justify-content-center">
     @foreach (var course in Model.Courses)
     {
         <partial name="_CoursePartial" model="@course" />
