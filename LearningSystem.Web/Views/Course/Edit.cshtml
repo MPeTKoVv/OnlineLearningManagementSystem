@@ -1,19 +1,19 @@
 ﻿@model CourseFormModel
 @{
-    ViewData["Title"] = "Add Course";
+    ViewData["Title"] = "Edit Course";
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
 
 <partial name="_CourseFormPartial" model="@Model" />
 
+@if (Model.StartDate < DateTime.Now)
+{
 <script>
-    var startDate = document.getElementById('startDate');
-    startDate.setAttribute("value", "@DateTime.Now")
-
-    var endDate = document.getElementById('endDate');
-    endDate.setAttribute("value", "@DateTime.Now")
+    var startDateField = document.getElementById("startDate");
+    startDateField.setAttribute("readonly", "readonly");
 </script>
+}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

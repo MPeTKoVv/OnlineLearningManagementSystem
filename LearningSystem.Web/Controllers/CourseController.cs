@@ -9,7 +9,6 @@
     using LearningSystem.Services.Data.Interfaces;
 
     using static Common.NotificationMessagesConstants;
-    using LearningSystem.Services.Data;
 
     [Authorize]
     public class CourseController : Controller
@@ -126,6 +125,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var courseExists = await courseService.ExistsByIdAsync(id);
@@ -182,6 +182,110 @@
             var courses = await courseService.GetEnrolledCoursesByUserIdAsync(userId);
 
             return View(courses);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var courseExists = await courseService.ExistsByIdAsync(id);
+            if (!courseExists)
+            {
+                TempData[ErrorMessage] = "The given course does not exist!";
+
+                return RedirectToAction("All", "Course");
+            }
+
+            string userId = this.User.GetId()!;
+            var isUserTeacher = await teacherService.TeacherExistByUserId(userId);
+            if (!isUserTeacher)
+            {
+                TempData[ErrorMessage] = "In order to edit a course you have to be a teacher!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            string teacherId = await teacherService.GetTeacherIdByUserId(userId);
+            var isTeachersCourse = await teacherService.IsTeachersCourseByUserIdAsync(teacherId);
+            if (!isTeachersCourse)
+            {
+                TempData[ErrorMessage] = "You can only edit your courses!";
+                return RedirectToAction("TeachersCourses");
+            }
+
+            try
+            {
+                var formModel = await courseService.GetCourseForEditByIdAsync(id);
+                formModel.Categories = await categoryService.AllCategoriesAsync();
+
+                return View(formModel);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add course! Please try again later or contact administrator!");
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, CourseFormModel formModel)
+        {
+            var courseExists = await courseService.ExistsByIdAsync(id);
+            if (!courseExists)
+            {
+                TempData[ErrorMessage] = "The given course does not exist!";
+
+                return RedirectToAction("All", "Course");
+            }
+
+            string userId = this.User.GetId()!;
+
+            var isUserTeacher = await teacherService.TeacherExistByUserId(userId);
+            if (!isUserTeacher)
+            {
+                TempData[ErrorMessage] = "You must be a teacher in order to edit course!";
+                return RedirectToAction("Become", "Teacher");
+            }
+
+            string teacherId = await teacherService.GetTeacherIdByUserId(userId);
+            var isTeachersCourse = await teacherService.IsTeachersCourseByUserIdAsync(teacherId);
+            if (!isTeachersCourse)
+            {
+                TempData[ErrorMessage] = "You can only edit your courses!";
+                return RedirectToAction("TeachersCourses");
+            }
+
+            var categoryExists = await categoryService.ExistsByIdAsync(formModel.CategoryId);
+            if (!categoryExists)
+            {
+                this.ModelState.AddModelError(nameof(formModel.CategoryId), "Selected category does not exist!");
+            }
+
+            if (formModel.StartDate <= DateTime.Now)
+            {
+                ModelState.Remove(nameof(formModel.StartDate));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                formModel.Categories = await categoryService.AllCategoriesAsync();
+
+                return View(formModel);
+            }
+
+            try
+            {
+                await courseService.EditByIdAsync(id, formModel);
+
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add course! Please try again later or contact administrator!");
+                formModel.Categories = await categoryService.AllCategoriesAsync();
+
+                return View(formModel);
+            }
+
+            TempData[SuccessMessage] = "Course was edited successfully!";
+            return RedirectToAction("Details", "Course", new { id });
         }
     }
 }

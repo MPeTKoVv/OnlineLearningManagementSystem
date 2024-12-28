@@ -11,5 +11,7 @@
         Task Create(string userId, BecomeTeacherFormModel formModel);
 
         Task<string> GetTeacherIdByUserId(string userId);
+
+        Task<bool> IsTeachersCourseByUserIdAsync(string teacherId);
     }
 }

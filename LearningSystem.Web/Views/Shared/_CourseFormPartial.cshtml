@@ -1,0 +1,74 @@
+﻿@using LearningSystem.Data.Models.Enums
+@model CourseFormModel
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <hr />
+        <div class="text-danger mb-3"></div>
+        <form method="post">
+            <div class="form-floating mb-3">
+                <input asp-for="Name" id="name" class="form-control" placeholder="Name" />
+                <label asp-for="Name">Course Name</label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea asp-for="Description" class="form-control" placeholder="Write a description about the course" style="height: 150px;"></textarea>
+                <label asp-for="Description">Course Description</label>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="DurationInHours" class="form-control" placeholder="Duration in Hours" />
+                <label asp-for="DurationInHours">Duration (in hours)</label>
+                <span asp-validation-for="DurationInHours" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="CategoryId">Category</label>
+                <select asp-for="CategoryId" class="form-control">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="small text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Level">Level</label>
+                <select asp-for="Level" class="form-control">
+                    @foreach (var level in Enum.GetValues(typeof(Level)))
+                    {
+                        <option value="@level">@level</option>
+                    }
+                </select>
+                <span asp-validation-for="Level" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Language" class="form-control" placeholder="Language" />
+                <label asp-for="Language">Language</label>
+                <span asp-validation-for="Language" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="StartDate" id="startDate" class="form-control" />
+                <label asp-for="StartDate" >Start Date</label>
+                <span asp-validation-for="StartDate" id="validation" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3 enddate">
+                <input asp-for="EndDate" id="endDate" class="form-control" />
+                <label asp-for="EndDate">End Date</label>
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Price" class="form-control" placeholder="Price" />
+                <label asp-for="Price">Price</label>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-check mb-3">
+                <input asp-for="OffersCertificate" type="checkbox" class="form-check-input" id="OffersCertificate" />
+                <label asp-for="OffersCertificate" class="form-check-label">Offers Certificate</label>
+                <span asp-validation-for="OffersCertificate" class="text-danger"></span>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary mt-3">Submit Application</button>
+            </div>
+        </form>
+    </div>
+</div>

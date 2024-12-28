@@ -1,7 +1,7 @@
 ﻿namespace LearningSystem.Services.Data.Interfaces
 {
-    using LearningSystem.Web.ViewModels.Course;
     using LearningSystem.Services.Data.Models;
+    using LearningSystem.Web.ViewModels.Course;
 
     public interface ICourseService
     {
@@ -20,5 +20,8 @@
         Task<IEnumerable<CourseViewModel>>GetEnrolledCoursesByUserIdAsync(string userId);
 
         Task AddEnrollmentAsync(int courseId, string enrollmentId);
+
+        Task<CourseFormModel> GetCourseForEditByIdAsync(int courseId);
+        Task EditByIdAsync(int courseId, CourseFormModel formModel);
     }
 }

@@ -17,6 +17,8 @@
         public DateTime StartDate { get; set; }
 
         public bool OffersCertificate { get; set; }
+
+        public bool HasStarted => StartDate < DateTime.Now;
     }
 
 }

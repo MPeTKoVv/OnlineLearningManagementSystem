@@ -108,6 +108,7 @@
                 Language = formModel.Language,
                 Level = formModel.Level,
                 StartDate = formModel.StartDate,
+                EndDate = formModel.EndDate,
                 Price = formModel.Price,
                 OffersCertificate = formModel.OffersCertificate,
             };
@@ -214,7 +215,7 @@
                 .Users
                 .Include(u => u.Enrollments)
                 .ThenInclude(e => e.Course)
-                .ThenInclude(c=>c.Category)
+                .ThenInclude(c => c.Category)
                 .FirstAsync(u => u.Id.ToString() == userId);
 
 
@@ -246,6 +247,48 @@
                 .FirstAsync(c => c.Id == courseId);
 
             course.Enrollments.Add(enrollment);
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<CourseFormModel> GetCourseForEditByIdAsync(int courseId)
+        {
+            var course = await dbContext
+                .Courses
+                .FirstAsync(c => c.Id == courseId);
+
+            return new CourseFormModel
+            {
+                Name = course.Name,
+                Description = course.Description,
+                DurationInHours = course.DurationInHours,
+                CategoryId = course.CategoryId,
+                Level = course.Level,
+                Language = course.Language,
+                StartDate = course.StartDate,
+                EndDate = course.EndDate,
+                Price = course.Price,
+                OffersCertificate = course.OffersCertificate,
+
+            };
+        }
+
+        public async Task EditByIdAsync(int courseId, CourseFormModel formModel)
+        {
+            var course = await dbContext
+                .Courses
+                .FirstAsync(c => c.Id == courseId);
+
+            course.Name = formModel.Name;
+            course.Description = formModel.Description;
+            course.DurationInHours = formModel.DurationInHours;
+            course.CategoryId = formModel.CategoryId;
+            course.Level = formModel.Level;
+            course.Language = formModel.Language;
+            course.StartDate = formModel.StartDate;
+            course.EndDate = formModel.EndDate;
+            course.Price = formModel.Price;
+            course.OffersCertificate = formModel.OffersCertificate;
 
             await dbContext.SaveChangesAsync();
         }
