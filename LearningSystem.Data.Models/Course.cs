@@ -50,6 +50,8 @@
 
         public bool OffersCertificate { get; set; }
 
+        public bool IsActive { get; set; } = true;
+
         public virtual ICollection<Lesson> Lessons { get; set; } = null!;
         public virtual ICollection<Enrollment> Enrollments { get; set; } = null!;
         public virtual ICollection<Rating> Ratings { get; set; } = null!;

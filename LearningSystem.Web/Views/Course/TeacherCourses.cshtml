@@ -4,12 +4,19 @@
 }
 
 <div>
-    <h1>@ViewData["Title"]</h1>
+    <h2 class="text-center">@ViewData["Title"]</h2>
     <hr />
-    <div class="row justify-content-center">
-        @foreach (var course in Model)
-        {
-            <partial name="_CoursePartial" model="@course" />
-        }
-    </div>
+    @if (!Model.Any())
+    {
+        <h4 class="text-center">You are not managing any courses currently.</h4>
+    }
+    else
+    {
+        <div class="row justify-content-center">
+            @foreach (var course in Model)
+            {
+                <partial name="_CoursePartial" model="@course" />
+            }
+        </div>
+    }
 </div>

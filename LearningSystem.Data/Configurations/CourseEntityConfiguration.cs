@@ -10,6 +10,10 @@
         public void Configure(EntityTypeBuilder<Course> builder)
         {
             builder
+                .Property(c => c.IsActive)
+                .HasDefaultValue(true);
+
+            builder
                 .HasOne(c => c.Category)
                 .WithMany(c => c.Courses)
                 .HasForeignKey(h => h.CategoryId)

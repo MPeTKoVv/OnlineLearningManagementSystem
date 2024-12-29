@@ -25,6 +25,7 @@
         {
             IQueryable<Course> coursesQuery = dbContext
                 .Courses
+                .Where(c => c.IsActive)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(queryModel.Category))
@@ -98,7 +99,7 @@
 
         public async Task<int> CreateAndReturnIdAsync(CourseFormModel formModel, string teacherId)
         {
-            var course = new Course()
+            Course course = new Course()
             {
                 Name = formModel.Name,
                 Description = formModel.Description,
@@ -144,7 +145,7 @@
         {
             var exists = await dbContext
                 .Courses
-                .AnyAsync(c => c.Id == id);
+                .AnyAsync(c => c.Id == id /*&& c.IsActive*/);
 
             return exists;
         }
@@ -173,7 +174,7 @@
         {
             var courses = await dbContext
                 .Courses
-                .Where(c => c.TeacherId.ToString() == teacherId)
+                .Where(c => c.TeacherId.ToString() == teacherId && c.IsActive)
                 .Select(c => new CourseViewModel
                 {
                     Id = c.Id,
@@ -193,6 +194,8 @@
         {
             var courses = await dbContext
                 .Courses
+                .Where(c => c.IsActive)
+                .OrderByDescending(c => c.CreatedOn)
                 .Take(4)
                 .Select(c => new CourseViewModel
                 {
@@ -289,6 +292,37 @@
             course.EndDate = formModel.EndDate;
             course.Price = formModel.Price;
             course.OffersCertificate = formModel.OffersCertificate;
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<CourseDeleteViewModel> GetCourseForDeleteByIdAsync(int id)
+        {
+            var course = await dbContext
+                .Courses
+                .Include(c => c.Category)
+                .FirstAsync(c => c.Id == id);
+
+            var viewModel = new CourseDeleteViewModel()
+            {
+                Id = course.Id,
+                Name = course.Name,
+                ImageUrl = course.Category.IconUrl,
+                CategoryName = course.Category.Name,
+                StartDate = course.StartDate,
+                Description = course.Description,
+            };
+
+            return viewModel;
+        }
+
+        public async Task DeleteByIdAsync(int id)
+        {
+            var course = await dbContext
+                .Courses
+                .FirstAsync(c => c.Id == id);
+
+            course.IsActive = false;
 
             await dbContext.SaveChangesAsync();
         }

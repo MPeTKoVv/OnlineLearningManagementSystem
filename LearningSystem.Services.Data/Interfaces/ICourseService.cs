@@ -23,5 +23,7 @@
 
         Task<CourseFormModel> GetCourseForEditByIdAsync(int courseId);
         Task EditByIdAsync(int courseId, CourseFormModel formModel);
+        Task<CourseDeleteViewModel> GetCourseForDeleteByIdAsync(int id);
+        Task DeleteByIdAsync(int id);
     }
 }

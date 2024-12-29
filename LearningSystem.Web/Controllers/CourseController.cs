@@ -287,5 +287,73 @@
             TempData[SuccessMessage] = "Course was edited successfully!";
             return RedirectToAction("Details", "Course", new { id });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var courseExists = await courseService.ExistsByIdAsync(id);
+            if (!courseExists)
+            {
+                TempData[ErrorMessage] = "The given course does not exist!";
+
+                return RedirectToAction("All", "Course");
+            }
+
+            string userId = this.User.GetId()!;
+            string teacherId = await teacherService.GetTeacherIdByUserId(userId);
+            var isTeachersCourse = await teacherService.IsTeachersCourseByUserIdAsync(teacherId);
+            if (!isTeachersCourse)
+            {
+                TempData[ErrorMessage] = "You can only delete your courses!";
+                return RedirectToAction("TeachersCourses");
+            }
+
+            try
+            {
+                var deleteViewModel = await courseService.GetCourseForDeleteByIdAsync(id);
+
+                return View(deleteViewModel);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add course! Please try again later or contact administrator!");
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, CourseDeleteViewModel deleteViewModel)
+        {
+            var courseExists = await courseService.ExistsByIdAsync(id);
+            if (!courseExists)
+            {
+                TempData[ErrorMessage] = "The given course does not exist!";
+
+                return RedirectToAction("All", "Course");
+            }
+
+            string userId = this.User.GetId()!;
+            string teacherId = await teacherService.GetTeacherIdByUserId(userId);
+            var isTeachersCourse = await teacherService.IsTeachersCourseByUserIdAsync(teacherId);
+            if (!isTeachersCourse)
+            {
+                TempData[ErrorMessage] = "You can only delete your courses!";
+                return RedirectToAction("TeachersCourses");
+            }
+
+            try
+            {
+                await courseService.DeleteByIdAsync(id);
+
+                TempData[SuccessMessage] = "Course was deletet successfully!";
+                return RedirectToAction("TeacherCourses", "Course");
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add course! Please try again later or contact administrator!");
+
+                return View(deleteViewModel);
+            }
+        }
     }
 }
