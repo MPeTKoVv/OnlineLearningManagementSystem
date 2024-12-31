@@ -140,7 +140,6 @@
             return View(course);
         }
 
-        [HttpGet]
         public async Task<IActionResult> Enroll(int courseId)
         {
             var courseExists = await courseService.ExistsByIdAsync(courseId);
@@ -204,7 +203,7 @@
             }
 
             string teacherId = await teacherService.GetTeacherIdByUserId(userId);
-            var isTeachersCourse = await teacherService.IsTeachersCourseByUserIdAsync(teacherId);
+            var isTeachersCourse = await teacherService.IsTeachersCourseByIdAndCourseIdsync(teacherId, id);
             if (!isTeachersCourse)
             {
                 TempData[ErrorMessage] = "You can only edit your courses!";
@@ -246,7 +245,7 @@
             }
 
             string teacherId = await teacherService.GetTeacherIdByUserId(userId);
-            var isTeachersCourse = await teacherService.IsTeachersCourseByUserIdAsync(teacherId);
+            var isTeachersCourse = await teacherService.IsTeachersCourseByIdAndCourseIdsync(teacherId, id);
             if (!isTeachersCourse)
             {
                 TempData[ErrorMessage] = "You can only edit your courses!";
@@ -301,7 +300,7 @@
 
             string userId = this.User.GetId()!;
             string teacherId = await teacherService.GetTeacherIdByUserId(userId);
-            var isTeachersCourse = await teacherService.IsTeachersCourseByUserIdAsync(teacherId);
+            var isTeachersCourse = await teacherService.IsTeachersCourseByIdAndCourseIdsync(teacherId, id);
             if (!isTeachersCourse)
             {
                 TempData[ErrorMessage] = "You can only delete your courses!";
@@ -334,7 +333,7 @@
 
             string userId = this.User.GetId()!;
             string teacherId = await teacherService.GetTeacherIdByUserId(userId);
-            var isTeachersCourse = await teacherService.IsTeachersCourseByUserIdAsync(teacherId);
+            var isTeachersCourse = await teacherService.IsTeachersCourseByIdAndCourseIdsync(teacherId, id);
             if (!isTeachersCourse)
             {
                 TempData[ErrorMessage] = "You can only delete your courses!";

@@ -58,16 +58,14 @@
             return teacherId;
         }
 
-        public async Task<bool> IsTeachersCourseByUserIdAsync(string teacherId)
+        public async Task<bool> IsTeachersCourseByIdAndCourseIdsync(string teacherId, int id)
         {
             var teacher = await dbContext
                 .Teachers
                 .Include(t => t.Courses)
                 .FirstAsync(t => t.Id.ToString() == teacherId);
 
-            var isTeachersCourse = teacher
-                .Courses
-                .Any(c => c.TeacherId.ToString() == teacherId);
+            var isTeachersCourse = teacher.Courses.Any(c => c.Id == id);
 
             return isTeachersCourse;
         }

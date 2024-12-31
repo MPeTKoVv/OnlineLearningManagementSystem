@@ -18,7 +18,7 @@
         public string Description { get; set; } = null!;
 
         [Required]
-        [MaxLength(TitleMaxLength)]
+        [MaxLength(ContentMaxLength)]
         public string Content { get; set; } = null!;
 
         public int CourseId { get; set; }

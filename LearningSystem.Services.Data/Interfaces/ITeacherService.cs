@@ -12,6 +12,6 @@
 
         Task<string> GetTeacherIdByUserId(string userId);
 
-        Task<bool> IsTeachersCourseByUserIdAsync(string teacherId);
+        Task<bool> IsTeachersCourseByIdAndCourseIdsync(string teacherId, int id);
     }
 }

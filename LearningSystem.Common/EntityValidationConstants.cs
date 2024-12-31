@@ -42,6 +42,9 @@
 
             public const int ContentMinLength = 10;
             public const int ContentMaxLength = 2048;
+
+            public const string DurationMinValue = "1";
+            public const string DurationMaxValue = "720";
         }
 
         public class Teacher
