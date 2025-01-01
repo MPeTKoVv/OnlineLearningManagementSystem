@@ -1,7 +1,20 @@
-﻿@using LearningSystem.Web.ViewModels.Lesson
+﻿@using LearningSystem.Services.Data.Interfaces
+@using LearningSystem.Web.Infrastructure.Extensions
+@using LearningSystem.Web.ViewModels.Lesson
 @model AllLessonsInCourseViewModel
+
+@inject ITeacherService teacherService
 @{
     ViewData["Title"] = "Lessons";
+
+    string userId = this.User.GetId()!;
+    bool isUserTeacher = await teacherService.TeacherExistByUserId(userId);
+    bool isTeachersCourse = false;
+    if (isUserTeacher)
+    {
+        string teacherId = await teacherService.GetTeacherIdByUserId(userId);
+        isTeachersCourse = await teacherService.IsTeachersCourseByIdAndCourseIdsync(teacherId, Model.CourseId);
+    }
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
@@ -30,10 +43,10 @@ else
                         <td>@(i + 1)</td>
                         <td>@lesson.Title</td>
                         <td>
-                            <a asp-controller="Lesson" asp-action="Details" asp-route-id="@i" class="btn btn-info btn-sm me-2">
+                            <a asp-controller="Lesson" asp-action="Details" asp-route-id="@lesson.Id" class="btn btn-info btn-sm me-2">
                                 View
                             </a>
-                            <a asp-controller="Lesson" asp-action="Edit" asp-route-id="@i" class="btn btn-warning btn-sm me-2">
+                            <a asp-controller="Lesson" asp-action="Edit" asp-route-id="@lesson.Id" class="btn btn-warning btn-sm me-2">
                                 Edit
                             </a>
                             <a asp-controller="Lesson" asp-action="Delete" asp-route-id="@i" class="btn btn-danger btn-sm">
@@ -46,6 +59,8 @@ else
         </table>
     </div>
 }
-
+@if(isTeachersCourse)
+{   
 <a asp-area="" asp-controller="Lesson" asp-action="Add" asp-route-courseId="@Model.CourseId"
    class="btn btn-primary btn-lg me-3">Add lesson</a>
+}

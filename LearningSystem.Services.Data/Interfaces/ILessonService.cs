@@ -6,6 +6,16 @@
     {
         Task AddByCourseIdAndFormModelAsync(int courseId, LessonFormModel formModel);
 
+        Task EditByIdAndFormModelAsync(int id, LessonFormModel formModel);
+
         Task<IEnumerable<LessonViewModel>> GetAllByCourseIdAsync(int courseId);
+
+        Task<LessonViewModel> GetDetailsByIdAsync(int id);
+
+        Task<LessonFormModel> GetForEditingByIdAsync(int id);
+        
+        Task<bool> ExistByIdAsync(int id);
+
+        Task<bool> IsTeachersLessonByIdAndCourseIdsync(string teacherId, int id);
     }
 }

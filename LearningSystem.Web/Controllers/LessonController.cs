@@ -87,7 +87,7 @@
             {
                 TempData[ErrorMessage] = "The given course does not exist!";
 
-                return RedirectToAction("All", "Courses");
+                return RedirectToAction("All", "Course");
             }
 
             string userId = this.User.GetId()!;
@@ -124,6 +124,105 @@
             {
                 this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add course! Please try again later or contact administrator!");
 
+                return View(formModel);
+            }
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(int id)
+        {
+            var lessonExist = await lessonService.ExistByIdAsync(id);
+            if (!lessonExist)
+            {
+                TempData[ErrorMessage] = "The given lesson does not exist!";
+
+                return RedirectToAction("TeacherCourses", "Course");
+            }
+
+            var lesson = await lessonService.GetDetailsByIdAsync(id);
+
+            return View(lesson);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var lessonExist = await lessonService.ExistByIdAsync(id);
+            if (!lessonExist)
+            {
+                TempData[ErrorMessage] = "The given lesson does not exist!";
+
+                return RedirectToAction("TeacherCourses", "Course");
+            }
+
+            string userId = this.User.GetId()!;
+            var isUserTeacher = await teacherService.TeacherExistByUserId(userId);
+            if (!isUserTeacher)
+            {
+                TempData[ErrorMessage] = "You must be a teacher in order to edit lesson!";
+
+                return RedirectToAction("Become", "Teacher");
+            }
+
+            string teacherId = await teacherService.GetTeacherIdByUserId(this.User.GetId()!);
+            var isTeachersLesson = await lessonService.IsTeachersLessonByIdAndCourseIdsync(teacherId, id);
+            if (!isTeachersLesson)
+            {
+                TempData[ErrorMessage] = "You can only edit lessons that are included in your courses!";
+
+                return RedirectToAction("TeacherCourses", "Course");
+            }
+
+            var formModel = await lessonService.GetForEditingByIdAsync(id);
+
+            return View(formModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, LessonFormModel formModel)
+        {
+            var lessonExist = await lessonService.ExistByIdAsync(id);
+            if (!lessonExist)
+            {
+                TempData[ErrorMessage] = "The given lesson does not exist!";
+
+                return RedirectToAction("TeacherCourses", "Course");
+            }
+
+            string userId = this.User.GetId()!;
+            var isUserTeacher = await teacherService.TeacherExistByUserId(userId);
+            if (!isUserTeacher)
+            {
+                TempData[ErrorMessage] = "You must be a teacher in order to edit lesson!";
+
+                return RedirectToAction("Become", "Teacher");
+            }
+
+            string teacherId = await teacherService.GetTeacherIdByUserId(this.User.GetId()!);
+            var isTeachersLesson = await lessonService.IsTeachersLessonByIdAndCourseIdsync(teacherId, id);
+            if (!isTeachersLesson)
+            {
+                TempData[ErrorMessage] = "You can only edit lessons that are included in your courses!";
+
+                return RedirectToAction("TeacherCourses", "Course");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(formModel);
+            }
+
+            try
+            {
+                await lessonService.EditByIdAndFormModelAsync(id, formModel);
+
+                TempData[SuccessMessage] = "The lesson was edited successfully";
+                return RedirectToAction("AllInCourse", new { courseId = formModel.CourseId });
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add course! Please try again later or contact administrator!");
+                
                 return View(formModel);
             }
         }

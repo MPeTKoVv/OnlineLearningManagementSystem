@@ -1,0 +1,46 @@
+﻿@using LearningSystem.Web.ViewModels.Lesson
+@model LessonFormModel
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="mb-3">
+            <form method="post">
+                <!-- Title -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Title" class="form-control" placeholder="Lesson Title" />
+                    <label asp-for="Title">Lesson Title</label>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <!-- Description -->
+                <div class="form-floating mb-3">
+                    <textarea asp-for="Description" class="form-control" placeholder="Lesson Description" style="height: 150px;"></textarea>
+                    <label asp-for="Description">Lesson Description</label>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <!-- Content -->
+                <div class="form-floating mb-3">
+                    <textarea asp-for="Content" class="form-control" placeholder="Lesson Content" style="height: 250px;"></textarea>
+                    <label asp-for="Content">Lesson Content</label>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+
+                <!-- Duration -->
+                <div class="form-floating mb-3">
+                    <input asp-for="DurationInMinutes" type="number" step="0.1" class="form-control" placeholder="Duration (in minutes)" />
+                    <label asp-for="DurationInMinutes">Duration (in minutes)</label>
+                    <span asp-validation-for="DurationInMinutes" class="text-danger"></span>
+                </div>
+
+                <input asp-for="CourseId" type="hidden" />
+
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
