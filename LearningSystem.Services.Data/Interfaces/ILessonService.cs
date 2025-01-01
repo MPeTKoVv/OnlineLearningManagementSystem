@@ -17,5 +17,9 @@
         Task<bool> ExistByIdAsync(int id);
 
         Task<bool> IsTeachersLessonByIdAndCourseIdsync(string teacherId, int id);
+
+        Task<DeleteLessonViewModel> GetForDeleteByIdAsync(int id);
+        
+        Task DeleteByIdAndViewModelAsync(int id, DeleteLessonViewModel viewModel);
     }
 }

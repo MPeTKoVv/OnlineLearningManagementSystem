@@ -29,6 +29,8 @@
         // Indicates if this lesson is available as a free preview
         public bool IsPreview { get; set; } = false;
 
+        public bool IsActive { get; set; } = true;
+
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public int DurationInMinutes { get; set; } 

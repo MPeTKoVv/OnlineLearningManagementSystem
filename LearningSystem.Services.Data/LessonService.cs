@@ -10,7 +10,6 @@
     using Interfaces;
     using LearningSystem.Web.ViewModels.Lesson;
     using System.Runtime.InteropServices;
-    using Microsoft.EntityFrameworkCore.Diagnostics;
 
     public class LessonService : ILessonService
     {
@@ -54,7 +53,7 @@
         {
             var lessons = await dbContext
                 .Lessons
-                .Where(l => l.CourseId == courseId)
+                .Where(l => l.CourseId == courseId && l.IsActive)
                 .Select(l => new LessonViewModel
                 {
                     Id = l.Id,
@@ -102,6 +101,7 @@
         {
             var result = await dbContext
                 .Lessons
+                .Where(l => l.IsActive)
                 .AnyAsync(l => l.Id == id);
 
             return result;
@@ -122,6 +122,31 @@
             var result = teacher.Courses.Any(c => c.Id == courseId);
 
             return result;
+        }
+
+        public async Task<DeleteLessonViewModel> GetForDeleteByIdAsync(int id)
+        {
+            var lesson = await dbContext
+                .Lessons
+                .FirstAsync(l => l.Id == id);
+
+            return new DeleteLessonViewModel
+            {
+                Id = lesson.Id,
+                Title = lesson.Title,
+                CourseId = lesson.CourseId,
+            };
+        }
+
+        public async Task DeleteByIdAndViewModelAsync(int id, DeleteLessonViewModel viewModel)
+        {
+            var lesson = await dbContext
+                .Lessons
+                .FirstAsync(l=>l.Id == id);
+
+            lesson.IsActive = false;
+
+            await dbContext.SaveChangesAsync();
         }
     }
 }
