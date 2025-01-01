@@ -40,16 +40,16 @@
                                 <a class="nav-link text-dark" asp-controller="Course" asp-action="TeacherCourses">Manage My Courses</a>
                             </li>
                         }
-                        @if (isUserTeacher)
-                        {
-                            <li>
-                                <a class="nav-link text-dark" asp-controller="Course" asp-action="Add">Add Course</a>
-                            </li>
-                        }
                         @if (this.User.Identity!.IsAuthenticated)
                         {
                             <li>
                                 <a class="nav-link text-dark" asp-controller="Course" asp-action="EnrolledCourses">Enrolled Courses</a>
+                            </li>
+                        }
+                        @if (isUserTeacher)
+                        {
+                            <li>
+                                <a class="nav-link text-dark" asp-controller="Course" asp-action="Add">Add Course</a>
                             </li>
                         }
                     </ul>
